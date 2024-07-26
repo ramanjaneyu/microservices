@@ -1,0 +1,31 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: gateway-service
+
+zuul:
+  routes:
+    account-service:
+      url: http://localhost:8082
+      path: /api/customers
+      #serviceId: account-service
+    oauth2-service:
+      url: http://localhost:8086
+      path: /oauth/token
+      #serviceId: oauth2-service
+    report-service:
+      url: http://localhost:8081
+      path: /reports/customers
+  sensitiveHeaders:
+
+security:
+  oauth2:
+    client:
+      client-id: Zuul
+      client-secret: bar
+    resource:
+      id: zuul-resource
+      token-info-uri: http://localhost:8086/oauth/check_token
+      user-info-uri: http://localhost:8082/api/customers
